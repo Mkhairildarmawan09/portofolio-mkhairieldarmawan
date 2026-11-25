@@ -6,7 +6,7 @@
     <meta property="og:image" content="./faviconari.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#050510" />
-    <style>html,body,#root{background-color:#050510;min-height:100%;margin:0}</style>
+    <style>html,body,#root{background-color:#050510;min-height:100%;margin:0;color:#f8fafc;font-family:'Inter',sans-serif}</style>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -20,9 +20,329 @@
     <title>M. Khairiel Darmawan | Portofolio</title>
     <script type="module" crossorigin src="./assets/index-JraU3a1h.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-BAu5BQY0.css">
+
+    <!-- PEMULIHAN TAMPILAN ASLI PORTOFOLIO & MODAL DETAIL -->
+    <style id="restore-portfolio-style">
+      /* Section & Container Utama */
+      .portfolio-root-section, .portofolio-root-section {
+        position: relative;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 5rem 1.5rem 7rem;
+        z-index: 2;
+      }
+
+      /* Tab Navigasi (Projects, Certificates, Achievements, Tech Stack) */
+      .portfolio-tab-bar, .portofolio-tab-bar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.65rem;
+        margin: 1.5rem auto 3rem;
+        padding: 0.5rem;
+        width: fit-content;
+        max-width: 100%;
+        background: rgba(13, 18, 36, 0.72);
+        border: 1px solid rgba(139, 92, 246, 0.25);
+        border-radius: 16px;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+      }
+
+      .portfolio-tab-btn, .portofolio-tab-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.7rem 1.35rem;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: #94a3b8;
+        font-family: 'Space Grotesk', 'Inter', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .portfolio-tab-btn svg, .portofolio-tab-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .portfolio-tab-btn:hover, .portofolio-tab-btn:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .portfolio-tab-btn.is-active, .portofolio-tab-btn.is-active,
+      .portfolio-tab-btn[aria-selected="true"], .portofolio-tab-btn[aria-selected="true"] {
+        color: #ffffff;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.35), rgba(139, 92, 246, 0.35));
+        border-color: rgba(129, 140, 248, 0.55);
+        box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+      }
+
+      /* Grid Kartu Proyek */
+      .portfolio-cards-grid, .portofolio-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+        gap: 2rem;
+        align-items: stretch;
+      }
+
+      /* Kartu Proyek Individu */
+      .portfolio-project-card, .portofolio-project-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(180deg, rgba(17, 24, 48, 0.85) 0%, rgba(10, 14, 28, 0.92) 100%);
+        border: 1px solid rgba(148, 163, 184, 0.16);
+        border-radius: 20px;
+        overflow: hidden;
+        backdrop-filter: blur(12px);
+        transition: transform 0.32s ease, border-color 0.32s ease, box-shadow 0.32s ease;
+      }
+
+      .portfolio-project-card:hover, .portofolio-project-card:hover {
+        transform: translateY(-7px);
+        border-color: rgba(96, 165, 250, 0.55);
+        box-shadow: 0 18px 40px -12px rgba(59, 130, 246, 0.28);
+      }
+
+      /* Gambar Thumbnail Proyek (Mengatasi gambar Portal Akademik yang meluber) */
+      .portfolio-card-thumbnail, .portofolio-card-thumbnail {
+        position: relative;
+        width: 100%;
+        height: 210px;
+        overflow: hidden;
+        background: #0b1120;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      }
+
+      .portfolio-card-thumbnail img,
+      .portfolio-card-thumbnail-image,
+      .portofolio-card-thumbnail img,
+      .portofolio-card-thumbnail-image {
+        width: 100% !important;
+        height: 100% !important;
+        max-height: 210px !important;
+        object-fit: cover;
+        object-position: top center;
+        display: block;
+        transition: transform 0.45s ease;
+      }
+
+      .portfolio-project-card:hover .portfolio-card-thumbnail img,
+      .portofolio-project-card:hover .portofolio-card-thumbnail img {
+        transform: scale(1.06);
+      }
+
+      /* Isi Kartu */
+      .portfolio-card-body, .portofolio-card-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding: 1.5rem;
+      }
+
+      .portfolio-card-title, .portofolio-card-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #f8fafc;
+        margin: 0 0 0.65rem;
+      }
+
+      .portfolio-card-desc, .portofolio-card-desc {
+        font-size: 0.92rem;
+        line-height: 1.65;
+        color: #94a3b8;
+        margin: 0 0 1.4rem;
+        flex: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      /* Tombol Footer Kartu (Live Demo & Details) */
+      .portfolio-card-actions, .portofolio-card-actions,
+      .portfolio-card-footer, .portofolio-card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-top: auto;
+      }
+
+      .portfolio-details-btn, .portofolio-details-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.6rem 1.15rem;
+        border-radius: 10px;
+        border: 1px solid rgba(96, 165, 250, 0.4);
+        background: rgba(59, 130, 246, 0.16);
+        color: #93c5fd;
+        font-size: 0.88rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.22s ease;
+      }
+
+      .portfolio-details-btn:hover, .portofolio-details-btn:hover {
+        background: linear-gradient(135deg, #3b82f6, #6366f1);
+        border-color: transparent;
+        color: #ffffff;
+        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+      }
+
+      .portfolio-demo-link, .portofolio-demo-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: #60a5fa;
+        font-size: 0.88rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      .portfolio-demo-link:hover, .portofolio-demo-link:hover {
+        color: #bfdbfe;
+        text-decoration: underline;
+      }
+
+      /* Grid Certificates, Achievements & Tech Stack */
+      .portfolio-certificates-grid, .portofolio-certificates-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .portfolio-cert-card, .portofolio-cert-card {
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        border-radius: 16px;
+        overflow: hidden;
+        transition: transform 0.25s ease, border-color 0.25s ease;
+        cursor: pointer;
+      }
+
+      .portfolio-cert-card:hover, .portofolio-cert-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(139, 92, 246, 0.5);
+      }
+
+      .portfolio-cert-preview-image, .portofolio-cert-preview-image {
+        width: 100%;
+        height: 195px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .portfolio-skills-grid, .portofolio-skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+        gap: 1.25rem;
+      }
+
+      .portfolio-skill-card, .portofolio-skill-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        padding: 1.5rem 1rem;
+        background: rgba(15, 23, 42, 0.75);
+        border: 1px solid rgba(148, 163, 184, 0.16);
+        border-radius: 16px;
+        text-align: center;
+        transition: all 0.25s ease;
+      }
+
+      .portfolio-skill-card:hover, .portofolio-skill-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(96, 165, 250, 0.5);
+        background: rgba(30, 41, 59, 0.85);
+      }
+
+      .portfolio-skill-card img, .portofolio-skill-card img {
+        width: 48px;
+        height: 48px;
+        object-fit: contain;
+      }
+
+      /* Popup Modal Detail Project */
+      .portfolio-modal-backdrop, .portofolio-modal-backdrop,
+      .project-detail-modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(3, 7, 18, 0.82);
+        backdrop-filter: blur(10px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.25rem;
+        z-index: 9999;
+      }
+
+      .portfolio-modal-dialog, .portofolio-modal-dialog,
+      .project-detail-modal-card {
+        width: 100%;
+        max-width: 820px;
+        max-height: 90vh;
+        overflow-y: auto;
+        background: linear-gradient(180deg, #0f172a 0%, #090d1a 100%);
+        border: 1px solid rgba(99, 102, 241, 0.35);
+        border-radius: 24px;
+        padding: 2rem;
+        color: #f8fafc;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75);
+        position: relative;
+      }
+
+      .portfolio-modal-dialog img, .portofolio-modal-dialog img {
+        width: 100%;
+        max-height: 360px;
+        object-fit: cover;
+        object-position: top center;
+        border-radius: 14px;
+        margin-bottom: 1.5rem;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- SKRIP SINKRONISASI CLASS OTOMATIS -->
+    <script>
+      (function () {
+        function syncPortfolioClasses() {
+          document.querySelectorAll('[class*="portofolio-"]').forEach(function (el) {
+            el.classList.forEach(function (cls) {
+              if (cls.startsWith('portofolio-')) {
+                var originalCls = cls.replace('portofolio-', 'portfolio-');
+                if (!el.classList.contains(originalCls)) {
+                  el.classList.add(originalCls);
+                }
+              }
+            });
+          });
+        }
+
+        var observer = new MutationObserver(syncPortfolioClasses);
+        observer.observe(document.documentElement, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ['class']
+        });
+        window.addEventListener('DOMContentLoaded', syncPortfolioClasses);
+      })();
+    </script>
   </body>
 </html>
-
