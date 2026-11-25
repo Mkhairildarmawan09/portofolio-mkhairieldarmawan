@@ -21,10 +21,9 @@
     <script type="module" crossorigin src="./assets/index-JraU3a1h.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-BAu5BQY0.css">
 
-    <!-- PEMULIHAN TAMPILAN ASLI PORTOFOLIO & MODAL DETAIL -->
-    <style id="restore-portfolio-style">
-      /* Section & Container Utama */
-      .portfolio-root-section, .portofolio-root-section {
+    <style id="fix-portofolio-exact">
+      /* Section & Container */
+      .portfolioroot-section {
         position: relative;
         max-width: 1200px;
         margin: 0 auto;
@@ -32,8 +31,12 @@
         z-index: 2;
       }
 
+      .portfoliocontainer-inner {
+        width: 100%;
+      }
+
       /* Tab Navigasi (Projects, Certificates, Achievements, Tech Stack) */
-      .portfolio-tab-bar, .portofolio-tab-bar {
+      .portfoliotab-bar {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -42,15 +45,15 @@
         padding: 0.5rem;
         width: fit-content;
         max-width: 100%;
-        background: rgba(13, 18, 36, 0.72);
-        border: 1px solid rgba(139, 92, 246, 0.25);
+        background: rgba(13, 18, 36, 0.78);
+        border: 1px solid rgba(139, 92, 246, 0.28);
         border-radius: 16px;
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
       }
 
-      .portfolio-tab-btn, .portofolio-tab-btn {
+      .portfoliotab-btn {
         display: inline-flex;
         align-items: center;
         gap: 0.55rem;
@@ -63,91 +66,109 @@
         font-size: 0.95rem;
         font-weight: 600;
         cursor: pointer;
-        transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.25s ease;
       }
 
-      .portfolio-tab-btn svg, .portofolio-tab-btn svg {
+      .portfoliotab-btn svg {
         width: 18px;
         height: 18px;
       }
 
-      .portfolio-tab-btn:hover, .portofolio-tab-btn:hover {
+      .portfoliotab-btn:hover {
         color: #ffffff;
         background: rgba(255, 255, 255, 0.06);
       }
 
-      .portfolio-tab-btn.is-active, .portofolio-tab-btn.is-active,
-      .portfolio-tab-btn[aria-selected="true"], .portofolio-tab-btn[aria-selected="true"] {
+      .portfoliotab-btn.is-active {
         color: #ffffff;
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.35), rgba(139, 92, 246, 0.35));
-        border-color: rgba(129, 140, 248, 0.55);
-        box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.38), rgba(139, 92, 246, 0.38));
+        border-color: rgba(129, 140, 248, 0.6);
+        box-shadow: 0 4px 20px rgba(99, 102, 241, 0.32);
       }
 
       /* Grid Kartu Proyek */
-      .portfolio-cards-grid, .portofolio-cards-grid {
+      .portfoliocards-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
         gap: 2rem;
         align-items: stretch;
       }
 
-      /* Kartu Proyek Individu */
-      .portfolio-project-card, .portofolio-project-card {
+      /* Kartu Proyek */
+      .portfolioproject-card {
         position: relative;
         display: flex;
         flex-direction: column;
-        background: linear-gradient(180deg, rgba(17, 24, 48, 0.85) 0%, rgba(10, 14, 28, 0.92) 100%);
-        border: 1px solid rgba(148, 163, 184, 0.16);
+        background: linear-gradient(180deg, rgba(17, 24, 48, 0.88) 0%, rgba(10, 14, 28, 0.95) 100%);
+        border: 1px solid rgba(148, 163, 184, 0.18);
         border-radius: 20px;
         overflow: hidden;
         backdrop-filter: blur(12px);
-        transition: transform 0.32s ease, border-color 0.32s ease, box-shadow 0.32s ease;
+        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
       }
 
-      .portfolio-project-card:hover, .portofolio-project-card:hover {
+      .portfolioproject-card:hover {
         transform: translateY(-7px);
         border-color: rgba(96, 165, 250, 0.55);
-        box-shadow: 0 18px 40px -12px rgba(59, 130, 246, 0.28);
+        box-shadow: 0 18px 40px -12px rgba(59, 130, 246, 0.3);
       }
 
-      /* Gambar Thumbnail Proyek (Mengatasi gambar Portal Akademik yang meluber) */
-      .portfolio-card-thumbnail, .portofolio-card-thumbnail {
+      .portfolioproject-metal-border {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        border-radius: 20px;
+        overflow: hidden;
+        opacity: 0.45;
+      }
+
+      .portfolioproject-metal-border canvas {
+        width: 100% !important;
+        height: 100% !important;
+        display: block;
+      }
+
+      .portfolioproject-card-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      /* Thumbnail Gambar Proyek (Mengunci ukuran agar tidak meluber) */
+      .portfoliocard-thumbnail {
         position: relative;
         width: 100%;
         height: 210px;
         overflow: hidden;
         background: #0b1120;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.14);
       }
 
-      .portfolio-card-thumbnail img,
-      .portfolio-card-thumbnail-image,
-      .portofolio-card-thumbnail img,
-      .portofolio-card-thumbnail-image {
+      .portfoliocard-thumbnail-image,
+      .portfoliocard-thumbnail img {
         width: 100% !important;
-        height: 100% !important;
-        max-height: 210px !important;
+        height: 210px !important;
         object-fit: cover;
         object-position: top center;
         display: block;
         transition: transform 0.45s ease;
       }
 
-      .portfolio-project-card:hover .portfolio-card-thumbnail img,
-      .portofolio-project-card:hover .portofolio-card-thumbnail img {
-        transform: scale(1.06);
+      .portfolioproject-card:hover .portfoliocard-thumbnail-image {
+        transform: scale(1.05);
       }
 
-      /* Isi Kartu */
-      .portfolio-card-body, .portofolio-card-body {
+      /* Konten Teks Kartu */
+      .portfoliocard-body {
         display: flex;
         flex-direction: column;
         flex: 1;
         padding: 1.5rem;
       }
 
-      .portfolio-card-title, .portofolio-card-title {
+      .portfoliocard-title {
         font-family: 'Space Grotesk', sans-serif;
         font-size: 1.25rem;
         font-weight: 700;
@@ -155,7 +176,7 @@
         margin: 0 0 0.65rem;
       }
 
-      .portfolio-card-desc, .portofolio-card-desc {
+      .portfoliocard-desc {
         font-size: 0.92rem;
         line-height: 1.65;
         color: #94a3b8;
@@ -167,9 +188,9 @@
         overflow: hidden;
       }
 
-      /* Tombol Footer Kartu (Live Demo & Details) */
-      .portfolio-card-actions, .portofolio-card-actions,
-      .portfolio-card-footer, .portofolio-card-footer {
+      /* Tombol & Link Footer Kartu */
+      .portfoliocard-footer,
+      .portfoliocard-actions {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -177,7 +198,8 @@
         margin-top: auto;
       }
 
-      .portfolio-details-btn, .portofolio-details-btn {
+      .portfoliodetails-btn,
+      .portfoliocard-body button {
         display: inline-flex;
         align-items: center;
         gap: 0.45rem;
@@ -192,14 +214,14 @@
         transition: all 0.22s ease;
       }
 
-      .portfolio-details-btn:hover, .portofolio-details-btn:hover {
+      .portfoliodetails-btn:hover,
+      .portfoliocard-body button:hover {
         background: linear-gradient(135deg, #3b82f6, #6366f1);
         border-color: transparent;
         color: #ffffff;
-        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
       }
 
-      .portfolio-demo-link, .portofolio-demo-link {
+      .portfoliocard-body a {
         display: inline-flex;
         align-items: center;
         gap: 0.4rem;
@@ -207,23 +229,24 @@
         font-size: 0.88rem;
         font-weight: 500;
         text-decoration: none;
-        transition: color 0.2s ease;
       }
 
-      .portfolio-demo-link:hover, .portofolio-demo-link:hover {
+      .portfoliocard-body a:hover {
         color: #bfdbfe;
         text-decoration: underline;
       }
 
-      /* Grid Certificates, Achievements & Tech Stack */
-      .portfolio-certificates-grid, .portofolio-certificates-grid {
+      /* Tab Certificates, Achievements & Tech Stack */
+      .portfoliocertificates-grid,
+      .portfolioachievements-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 1.5rem;
       }
 
-      .portfolio-cert-card, .portofolio-cert-card {
-        background: rgba(15, 23, 42, 0.8);
+      .portfoliocert-card,
+      .portfolioachievement-card {
+        background: rgba(15, 23, 42, 0.82);
         border: 1px solid rgba(148, 163, 184, 0.18);
         border-radius: 16px;
         overflow: hidden;
@@ -231,53 +254,59 @@
         cursor: pointer;
       }
 
-      .portfolio-cert-card:hover, .portofolio-cert-card:hover {
+      .portfoliocert-card:hover,
+      .portfolioachievement-card:hover {
         transform: translateY(-5px);
         border-color: rgba(139, 92, 246, 0.5);
       }
 
-      .portfolio-cert-preview-image, .portofolio-cert-preview-image {
+      .portfoliocert-preview-image,
+      .portfoliocert-card img,
+      .portfolioachievement-card img {
         width: 100%;
         height: 195px;
         object-fit: cover;
         display: block;
       }
 
-      .portfolio-skills-grid, .portofolio-skills-grid {
+      .portfolioskills-grid,
+      .portfoliotech-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
         gap: 1.25rem;
       }
 
-      .portfolio-skill-card, .portofolio-skill-card {
+      .portfolioskill-card,
+      .portfoliotech-card {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 0.75rem;
         padding: 1.5rem 1rem;
-        background: rgba(15, 23, 42, 0.75);
+        background: rgba(15, 23, 42, 0.78);
         border: 1px solid rgba(148, 163, 184, 0.16);
         border-radius: 16px;
         text-align: center;
         transition: all 0.25s ease;
       }
 
-      .portfolio-skill-card:hover, .portofolio-skill-card:hover {
+      .portfolioskill-card:hover,
+      .portfoliotech-card:hover {
         transform: translateY(-4px);
         border-color: rgba(96, 165, 250, 0.5);
-        background: rgba(30, 41, 59, 0.85);
+        background: rgba(30, 41, 59, 0.88);
       }
 
-      .portfolio-skill-card img, .portofolio-skill-card img {
+      .portfolioskill-card img,
+      .portfoliotech-card img {
         width: 48px;
         height: 48px;
         object-fit: contain;
       }
 
       /* Popup Modal Detail Project */
-      .portfolio-modal-backdrop, .portofolio-modal-backdrop,
-      .project-detail-modal-backdrop {
+      .portfoliomodal-backdrop {
         position: fixed;
         inset: 0;
         background: rgba(3, 7, 18, 0.82);
@@ -289,8 +318,7 @@
         z-index: 9999;
       }
 
-      .portfolio-modal-dialog, .portofolio-modal-dialog,
-      .project-detail-modal-card {
+      .portfoliomodal-dialog {
         width: 100%;
         max-width: 820px;
         max-height: 90vh;
@@ -304,7 +332,7 @@
         position: relative;
       }
 
-      .portfolio-modal-dialog img, .portofolio-modal-dialog img {
+      .portfoliomodal-dialog img {
         width: 100%;
         max-height: 360px;
         object-fit: cover;
@@ -317,32 +345,5 @@
   </head>
   <body>
     <div id="root"></div>
-
-    <!-- SKRIP SINKRONISASI CLASS OTOMATIS -->
-    <script>
-      (function () {
-        function syncPortfolioClasses() {
-          document.querySelectorAll('[class*="portofolio-"]').forEach(function (el) {
-            el.classList.forEach(function (cls) {
-              if (cls.startsWith('portofolio-')) {
-                var originalCls = cls.replace('portofolio-', 'portfolio-');
-                if (!el.classList.contains(originalCls)) {
-                  el.classList.add(originalCls);
-                }
-              }
-            });
-          });
-        }
-
-        var observer = new MutationObserver(syncPortfolioClasses);
-        observer.observe(document.documentElement, {
-          childList: true,
-          subtree: true,
-          attributes: true,
-          attributeFilter: ['class']
-        });
-        window.addEventListener('DOMContentLoaded', syncPortfolioClasses);
-      })();
-    </script>
   </body>
 </html>
