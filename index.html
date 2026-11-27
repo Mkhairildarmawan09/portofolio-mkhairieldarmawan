@@ -551,6 +551,7 @@
         }
 
         // 3. Tangkap klik di seluruh kartu atau tombol "Lihat sertifikat" / "Lihat piagam"
+       // 3. Tangkap klik di seluruh kartu atau tombol "Lihat sertifikat" / "Lihat piagam"
         document.addEventListener('click', function (e) {
           var card = e.target.closest('.portfoliocert-card, .portfolioachievement-card');
           if (!card) return;
@@ -563,6 +564,20 @@
 
           var titleEl = card.querySelector('h3, h4, p');
           var title = titleEl ? titleEl.textContent.trim() : (img.alt || 'Detail Sertifikat');
+
+          // Ganti judul khusus untuk tab Achievements (Piagam)
+          if (card.classList.contains('portfolioachievement-card')) {
+            var allAchievements = Array.from(document.querySelectorAll('.portfolioachievement-card'));
+            var idx = allAchievements.indexOf(card);
+            var customAchievementTitles = [
+              'Judul Piagam Pertama Kamu', // <-- Ganti sesuai piagam ke-1
+              'Judul Piagam Kedua Kamu'    // <-- Ganti sesuai piagam ke-2
+            ];
+            if (customAchievementTitles[idx]) {
+              title = customAchievementTitles[idx];
+            }
+          }
+
           openCertViewer(img.src, title);
         }, true);
       })();
