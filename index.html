@@ -50,7 +50,34 @@
         display: none !important;
       }
 
-      /* 2. SECTION & TAB NAVIGASI */
+      /* 2. PERBAIKAN SPOTIFY EMBED (HILANGKAN KOTAK PUTIH BAWAH) */
+      .spotify-card {
+        height: auto !important;
+        min-height: 0 !important;
+      }
+
+      .spotify-player-frame {
+        height: 352px !important;
+        min-height: 352px !important;
+        max-height: 352px !important;
+        background: transparent !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        border-radius: 16px !important;
+      }
+
+      .spotify-embed,
+      .spotify-player-frame iframe {
+        width: 100% !important;
+        height: 352px !important;
+        min-height: 352px !important;
+        max-height: 352px !important;
+        display: block !important;
+        border: 0 !important;
+        border-radius: 16px !important;
+      }
+
+      /* 3. SECTION & TAB NAVIGASI */
       .portfolioroot-section {
         position: relative;
         max-width: 1200px;
@@ -111,7 +138,7 @@
         box-shadow: 0 4px 20px rgba(99, 102, 241, 0.32);
       }
 
-      /* 3. GRID & KARTU PROJECTS */
+      /* 4. GRID & KARTU PROJECTS */
       .portfoliocards-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
@@ -240,7 +267,7 @@
         text-decoration: underline;
       }
 
-      /* 4. CERTIFICATES & ACHIEVEMENTS (PAKSA SUSUNAN ATAS-BAWAH) */
+      /* 5. CERTIFICATES & ACHIEVEMENTS */
       .portfoliocertificates-grid,
       .portfolioachievements-grid {
         display: grid;
@@ -262,7 +289,6 @@
         cursor: pointer;
       }
 
-      /* Paksa semua div pembungkus di dalam kartu sertifikat tersusun vertikal (bukan ke samping) */
       .portfoliocert-card > div:not(.liquid-metal-border),
       .portfolioachievement-card > div:not(.liquid-metal-border) {
         display: flex !important;
@@ -295,7 +321,6 @@
         border-bottom: 1px solid rgba(148, 163, 184, 0.14);
       }
 
-      /* Tombol "Lihat sertifikat" di bagian bawah kartu */
       .portfoliocert-card button,
       .portfoliocert-card a,
       .portfoliocert-card span,
@@ -342,7 +367,7 @@
         flex-shrink: 0 !important;
       }
 
-      /* 5. TECH STACK */
+      /* 6. TECH STACK */
       .portfolioskills-grid,
       .portfoliotech-grid {
         display: grid;
@@ -378,138 +403,120 @@
         height: 48px;
         object-fit: contain;
       }
-
-      /* 6. MODAL SERTIFIKAT & PROJECT (MENANGANI NAMA CLASS TANPA TANDA HUBUNG) */
-      .portfoliomodal-backdrop,
-      .portfoliocert-modal-backdrop,
-      .portfolioproject-modal-backdrop,
-      [class*="portfoliomodal"] {
-        position: fixed !important;
-        inset: 0 !important;
-        background: rgba(3, 7, 18, 0.88) !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 1.25rem !important;
-        z-index: 99999 !important;
-      }
-
-      .portfoliomodal-dialog,
-      .portfoliocert-modal-dialog,
-      .portfolioproject-modal-dialog {
-        position: relative !important;
-        width: 100% !important;
-        max-width: 860px !important;
-        max-height: 90vh !important;
-        overflow-y: auto !important;
-        background: linear-gradient(180deg, #0f172a 0%, #090d1a 100%) !important;
-        border: 1px solid rgba(99, 102, 241, 0.45) !important;
-        border-radius: 22px !important;
-        padding: 1.75rem !important;
-        color: #f8fafc !important;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85) !important;
-      }
-
-      .portfoliomodal-dialog img,
-      .portfoliocert-modal-dialog img,
-      .portfolioproject-modal-dialog img {
-        width: 100% !important;
-        max-height: 70vh !important;
-        object-fit: contain !important;
-        background: #050814 !important;
-        border-radius: 14px !important;
-        margin-bottom: 1.25rem !important;
-        border: 1px solid rgba(148, 163, 184, 0.2) !important;
-      }
-      /* 7. PERBAIKAN NAVBAR MOBILE & SPOTIFY EMBED DI HP */
-      .spotify-player-frame {
-        height: auto !important;
-        min-height: 0 !important;
-        background: transparent !important;
-        overflow: hidden !important;
-        border-radius: 16px !important;
-      }
-
-      .spotify-embed {
-        width: 100% !important;
-        height: 352px !important;
-        min-height: 352px !important;
-        max-height: 352px !important;
-        display: block !important;
-        border: 0 !important;
-        border-radius: 16px !important;
-      }
-
-      @media (max-width: 768px) {
-        .spotify-embed {
-          height: 352px !important;
-        }
-      
-      }
-
-      @media (max-width: 768px) {
-        .navbar-container .glass-surface__content {
-          justify-content: flex-end !important;
-        }
-      }
-
-      /* Pastikan kotak Spotify pas tanpa ruang putih berlebih */
-      .spotify-player-frame {
-        height: auto !important;
-        min-height: 0 !important;
-        background: transparent !important;
-        padding: 0 !important;
-        overflow: hidden !important;
-        border-radius: 16px !important;
-      }
-
-      .spotify-embed {
-        width: 100% !important;
-        height: 352px !important;
-        min-height: 352px !important;
-        max-height: 352px !important;
-        display: block !important;
-        border: 0 !important;
-        border-radius: 16px !important;
-      }
     </style>
   </head>
   <body>
     <div id="root"></div>
 
-    <!-- JAGA AGAR SCROLL TIDAK TERKUNCI & MODAL SERTIFIKAT BISA DITUTUP -->
     <script>
       (function () {
-        // 1. Pastikan halaman tidak pernah terkunci (ngestuck) saat modal bawaan tidak muncul
-        function unlockScrollIfNoOverlay() {
-          var customModal = document.getElementById('custom-cert-viewer');
-          if (!customModal && document.body.style.overflow === 'hidden') {
-            document.body.style.overflow = '';
+        // ============================================================
+        // UBAH JUDUL PIAGAM DI SINI SESUAI NAMA PENCAPAIAN ASLI KAMU
+        // ============================================================
+        var JUDUL_PIAGAM = [
+          'Finalis 20 Besar Women & Youth Innovation Competition Sumut 2025',
+          'Piagam Pencapaian Kedua Kamu'
+        ];
+
+        // 1. GANTI NAMA BRAND NAVBAR MOBILE MENJADI AriiDev.
+        function updateBrandAndTech() {
+          document.querySelectorAll('.navbar-mobile-brand').forEach(function (el) {
+            if (el.textContent.trim() !== 'AriiDev.') {
+              el.textContent = 'AriiDev.';
+              el.setAttribute('aria-label', 'AriiDev.');
+            }
+          });
+
+          // 2. TAMBAH FIGMA & CANVA DI TECH STACK
+          var grid = document.querySelector('.portfolioskills-grid, .portfoliotech-grid');
+          if (!grid) {
+            var cards = document.querySelectorAll('[class*="skill-card"], [class*="tech-card"]');
+            if (cards.length > 0) grid = cards[0].parentElement;
           }
-          if (!customModal && document.documentElement.style.overflow === 'hidden') {
-            document.documentElement.style.overflow = '';
+          if (grid && grid.dataset.extraToolsAdded !== 'true' && grid.firstElementChild) {
+            var extraTools = [
+              {
+                name: 'Figma',
+                svg:
+                  '<svg viewBox="0 0 38 57" width="44" height="44" style="display:block;background:transparent" xmlns="http://www.w3.org/2000/svg">' +
+                  '<path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/>' +
+                  '<path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/>' +
+                  '<path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/>' +
+                  '<path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/>' +
+                  '<path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/>' +
+                  '</svg>'
+              },
+              {
+                name: 'Canva',
+                svg:
+                  '<svg viewBox="0 0 64 64" width="46" height="46" style="display:block;background:transparent" xmlns="http://www.w3.org/2000/svg">' +
+                  '<defs><linearGradient id="canvaGrad" x1="10%" y1="90%" x2="90%" y2="10%">' +
+                  '<stop offset="0%" stop-color="#00C4CC"/><stop offset="50%" stop-color="#3B66F5"/><stop offset="100%" stop-color="#7D2AE8"/>' +
+                  '</linearGradient></defs>' +
+                  '<circle cx="32" cy="32" r="30" fill="url(#canvaGrad)"/>' +
+                  '<path fill="#FFFFFF" d="M39.6 38.2c-.8 0-1.4.5-2.1 1.4-1.7 2.2-3.9 3.6-6.4 3.6-3.4 0-5.6-2.5-5.6-6.5 0-5.8 4.2-11.8 9.2-11.8 2.1 0 3.4 1.1 3.4 2.7 0 1.4-.9 2.5-2.1 2.5-.9 0-1.5-.5-1.5-1.2 0-.4.2-.8.4-1.1-.3-.2-.7-.3-1.2-.3-2.9 0-5.2 4.3-5.2 8.7 0 2.6 1.3 4.2 3.5 4.2 2.1 0 4.1-1.3 5.7-3.4.5-.7 1.1-1 1.7-1 .9 0 1.6.7 1.6 1.5 0 .4-.2.8-.6 1.2-.3.2-.5.5-.8.5z"/>' +
+                  '</svg>'
+              }
+            ];
+
+            var templateCard = grid.firstElementChild;
+            extraTools.forEach(function (tool) {
+              if (grid.textContent.indexOf(tool.name) !== -1) return;
+              var newCard = templateCard.cloneNode(true);
+              var oldMedia = newCard.querySelector('img, svg');
+              if (oldMedia) {
+                var wrapper = oldMedia.parentElement;
+                if (wrapper && wrapper !== newCard) {
+                  wrapper.style.background = 'transparent';
+                  wrapper.style.boxShadow = 'none';
+                  wrapper.style.border = 'none';
+                }
+                var svgHolder = document.createElement('div');
+                svgHolder.style.cssText = 'display:flex;align-items:center;justify-content:center;width:48px;height:48px;background:transparent;';
+                svgHolder.innerHTML = tool.svg;
+                oldMedia.replaceWith(svgHolder);
+              }
+              var labelUpdated = false;
+              newCard.querySelectorAll('span, p, h3, h4, div').forEach(function (el) {
+                if (!labelUpdated && el.children.length === 0 && el.textContent.trim().length > 0) {
+                  el.textContent = tool.name;
+                  labelUpdated = true;
+                }
+              });
+              grid.appendChild(newCard);
+            });
+            grid.dataset.extraToolsAdded = 'true';
           }
         }
-        setInterval(unlockScrollIfNoOverlay, 250);
 
-        // 2. Fungsi untuk membuka popup sertifikat / piagam
+        new MutationObserver(updateBrandAndTech).observe(document.documentElement, {
+          childList: true,
+          subtree: true
+        });
+        updateBrandAndTech();
+
+        // 3. JAGA SCROLL HALAMAN TIDAK PERNAH TERKUNCI
+        setInterval(function () {
+          if (!document.getElementById('custom-cert-viewer')) {
+            if (document.body.style.overflow === 'hidden') document.body.style.overflow = '';
+            if (document.documentElement.style.overflow === 'hidden') document.documentElement.style.overflow = '';
+          }
+        }, 250);
+
+        // 4. PREVIEW MODAL SERTIFIKAT & PIAGAM
         function openCertViewer(imgSrc, titleText) {
           var existing = document.getElementById('custom-cert-viewer');
           if (existing) existing.remove();
 
-          // Sembunyikan modal bawaan yang rusak/tak terlihat jika ada
           document.querySelectorAll('[class*="modal"]').forEach(function (m) {
-            if (m.id !== 'custom-cert-viewer') {
-              m.style.display = 'none';
-            }
+            if (m.id !== 'custom-cert-viewer') m.style.display = 'none';
           });
 
           var overlay = document.createElement('div');
           overlay.id = 'custom-cert-viewer';
           overlay.style.cssText =
             'position:fixed;inset:0;background:rgba(3,7,18,0.88);backdrop-filter:blur(8px);' +
-            'display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:999999;' +
-            'animation:fadeInCert 0.2s ease;';
+            'display:flex;align-items:center;justify-content:center;padding:1.25rem;z-index:999999;';
 
           overlay.innerHTML =
             '<div style="position:relative;width:100%;max-width:880px;background:linear-gradient(180deg,#111830 0%,#090d1a 100%);' +
@@ -517,11 +524,11 @@
             'box-shadow:0 25px 60px rgba(0,0,0,0.85);text-align:center;color:#f8fafc;">' +
               '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.9rem;gap:1rem;">' +
                 '<span style="font-family:\'Space Grotesk\',sans-serif;font-weight:700;font-size:1rem;color:#e2e8f0;text-align:left;">' +
-                  (titleText || 'Preview Sertifikat / Piagam') +
+                  titleText +
                 '</span>' +
                 '<button type="button" id="close-cert-viewer-btn" style="background:rgba(239,68,68,0.18);color:#fca5a5;' +
                 'border:1px solid rgba(239,68,68,0.4);border-radius:10px;padding:6px 14px;cursor:pointer;' +
-                'font-family:\'Space Grotesk\',sans-serif;font-weight:600;font-size:0.88rem;">Tutup ✕</button>' +
+                'font-family:\'Space Grotesk\',sans-serif;font-weight:600;font-size:0.88rem;flex-shrink:0;">Tutup ✕</button>' +
               '</div>' +
               '<div style="background:#050814;border-radius:14px;padding:0.5rem;border:1px solid rgba(148,163,184,0.18);">' +
                 '<img src="' + imgSrc + '" alt="Sertifikat" style="width:100%;max-height:76vh;object-fit:contain;border-radius:10px;display:block;margin:0 auto;">' +
@@ -535,23 +542,12 @@
           }
 
           overlay.addEventListener('click', function (ev) {
-            if (ev.target === overlay || ev.target.id === 'close-cert-viewer-btn') {
-              closeViewer();
-            }
-          });
-
-          document.addEventListener('keydown', function escHandler(ev) {
-            if (ev.key === 'Escape') {
-              closeViewer();
-              document.removeEventListener('keydown', escHandler);
-            }
+            if (ev.target === overlay || ev.target.id === 'close-cert-viewer-btn') closeViewer();
           });
 
           document.body.appendChild(overlay);
         }
 
-        // 3. Tangkap klik di seluruh kartu atau tombol "Lihat sertifikat" / "Lihat piagam"
-       // 3. Tangkap klik di seluruh kartu atau tombol "Lihat sertifikat" / "Lihat piagam"
         document.addEventListener('click', function (e) {
           var card = e.target.closest('.portfoliocert-card, .portfolioachievement-card');
           if (!card) return;
@@ -565,127 +561,16 @@
           var titleEl = card.querySelector('h3, h4, p');
           var title = titleEl ? titleEl.textContent.trim() : (img.alt || 'Detail Sertifikat');
 
-          // Ganti judul khusus untuk tab Achievements (Piagam)
           if (card.classList.contains('portfolioachievement-card')) {
             var allAchievements = Array.from(document.querySelectorAll('.portfolioachievement-card'));
             var idx = allAchievements.indexOf(card);
-            var customAchievementTitles = [
-              'Preview Piagam 1', // <-- Ganti sesuai piagam ke-1
-              'Preview Piagam 2'    // <-- Ganti sesuai piagam ke-2
-            ];
-            if (customAchievementTitles[idx]) {
-              title = customAchievementTitles[idx];
+            if (JUDUL_PIAGAM[idx]) {
+              title = JUDUL_PIAGAM[idx];
             }
           }
 
           openCertViewer(img.src, title);
         }, true);
-      })();
-    </script>
-    <!-- TAMBAHKAN TECH STACK: FIGMA & CANVA -->
-    <!-- TAMBAHKAN TECH STACK: FIGMA & CANVA (SVG TRANSPARAN BERSIH) -->
-    <script>
-      (function () {
-        var extraTools = [
-          {
-            name: 'Figma',
-            svg:
-              '<svg viewBox="0 0 38 57" width="44" height="44" style="display:block;background:transparent" xmlns="http://www.w3.org/2000/svg">' +
-              '<path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/>' +
-              '<path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/>' +
-              '<path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/>' +
-              '<path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/>' +
-              '<path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/>' +
-              '</svg>'
-          },
-          {
-            name: 'Canva',
-            svg:
-              '<svg viewBox="0 0 64 64" width="46" height="46" style="display:block;background:transparent" xmlns="http://www.w3.org/2000/svg">' +
-              '<defs><linearGradient id="canvaGrad" x1="10%" y1="90%" x2="90%" y2="10%">' +
-              '<stop offset="0%" stop-color="#00C4CC"/><stop offset="50%" stop-color="#3B66F5"/><stop offset="100%" stop-color="#7D2AE8"/>' +
-              '</linearGradient></defs>' +
-              '<circle cx="32" cy="32" r="30" fill="url(#canvaGrad)"/>' +
-              '<path fill="#FFFFFF" d="M39.6 38.2c-.8 0-1.4.5-2.1 1.4-1.7 2.2-3.9 3.6-6.4 3.6-3.4 0-5.6-2.5-5.6-6.5 0-5.8 4.2-11.8 9.2-11.8 2.1 0 3.4 1.1 3.4 2.7 0 1.4-.9 2.5-2.1 2.5-.9 0-1.5-.5-1.5-1.2 0-.4.2-.8.4-1.1-.3-.2-.7-.3-1.2-.3-2.9 0-5.2 4.3-5.2 8.7 0 2.6 1.3 4.2 3.5 4.2 2.1 0 4.1-1.3 5.7-3.4.5-.7 1.1-1 1.7-1 .9 0 1.6.7 1.6 1.5 0 .4-.2.8-.6 1.2-.3.2-.5.5-.8.5z"/>' +
-              '</svg>'
-          }
-        ];
-
-        function injectDesignTools() {
-          var grid = document.querySelector('.portfolioskills-grid, .portfoliotech-grid');
-          if (!grid) {
-            var cards = document.querySelectorAll('[class*="skill-card"], [class*="tech-card"]');
-            if (cards.length > 0) grid = cards[0].parentElement;
-          }
-          if (!grid || grid.dataset.extraToolsAdded === 'true') return;
-
-          var templateCard = grid.firstElementChild;
-          if (!templateCard) return;
-
-          extraTools.forEach(function (tool) {
-            if (grid.textContent.indexOf(tool.name) !== -1) return;
-
-            var newCard = templateCard.cloneNode(true);
-
-            // Ganti elemen gambar/ikon dengan SVG transparan & hilangkan background kotak hitam
-            var oldMedia = newCard.querySelector('img, svg');
-            if (oldMedia) {
-              var wrapper = oldMedia.parentElement;
-              if (wrapper && wrapper !== newCard) {
-                wrapper.style.background = 'transparent';
-                wrapper.style.backgroundColor = 'transparent';
-                wrapper.style.boxShadow = 'none';
-                wrapper.style.border = 'none';
-              }
-              var svgHolder = document.createElement('div');
-              svgHolder.style.cssText = 'display:flex;align-items:center;justify-content:center;width:48px;height:48px;background:transparent;';
-              svgHolder.innerHTML = tool.svg;
-              oldMedia.replaceWith(svgHolder);
-            }
-
-            // Perbarui teks label menjadi Figma / Canva
-            var labelUpdated = false;
-            newCard.querySelectorAll('span, p, h3, h4, div').forEach(function (el) {
-              if (!labelUpdated && el.children.length === 0 && el.textContent.trim().length > 0) {
-                el.textContent = tool.name;
-                labelUpdated = true;
-              }
-            });
-
-            grid.appendChild(newCard);
-          });
-
-          grid.dataset.extraToolsAdded = 'true';
-        }
-
-        var techObserver = new MutationObserver(injectDesignTools);
-        techObserver.observe(document.documentElement, {
-          childList: true,
-          subtree: true
-        });
-        window.addEventListener('DOMContentLoaded', injectDesignTools);
-      })();
-
-      
-    </script>
-    <!-- GANTI BRAND NAVBAR MOBILE MENJADI AriiDev. -->
-    <script>
-      (function () {
-        function setAriiDevBrand() {
-          document.querySelectorAll('.navbar-mobile-brand').forEach(function (el) {
-            if (el.textContent.trim() !== 'AriiDev.') {
-              el.textContent = 'AriiDev.';
-              el.setAttribute('aria-label', 'AriiDev.');
-            }
-          });
-        }
-
-        setAriiDevBrand();
-        var brandObserver = new MutationObserver(setAriiDevBrand);
-        brandObserver.observe(document.documentElement, {
-          childList: true,
-          subtree: true
-        });
       })();
     </script>
   </body>
