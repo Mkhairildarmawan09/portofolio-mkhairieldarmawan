@@ -582,7 +582,138 @@
 
           openCertViewer(img.src, title);
         }, true);
+        // 5. EFEK PETIR ELEKTRIK SAAT LOADING SCREEN (52% Memuat assets...)
+        (function initLoadingLightning() {
+          var canvas = document.createElement('canvas');
+          canvas.id = 'ariidev-lightning-loader';
+          canvas.style.cssText =
+            'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:99998;' +
+            'transition:opacity 0.55s ease;';
+          document.body.appendChild(canvas);
+
+          var ctx = canvas.getContext('2d');
+          var w, h, animId;
+          var bolts = [];
+          var flashAlpha = 0;
+          var isStopped = false;
+
+          function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+          }
+          resize();
+          window.addEventListener('resize', resize);
+
+          function createBolt(startX, startY, endX, endY, displace) {
+            var segments = [];
+            function subdivide(x1, y1, x2, y2, disp) {
+              if (disp < 6) {
+                segments.push({ x1: x1, y1: y1, x2: x2, y2: y2 });
+                return;
+              }
+              var midX = (x1 + x2) / 2 + (Math.random() - 0.5) * disp;
+              var midY = (y1 + y2) / 2 + (Math.random() - 0.5) * disp;
+              subdivide(x1, y1, midX, midY, disp * 0.55);
+              subdivide(midX, midY, x2, y2, disp * 0.55);
+
+              // Cabang petir kecil
+              if (Math.random() < 0.28 && disp > 22) {
+                var branchX = midX + (Math.random() - 0.5) * disp * 1.6;
+                var branchY = midY + Math.random() * disp * 1.4;
+                subdivide(midX, midY, branchX, branchY, disp * 0.45);
+              }
+            }
+            subdivide(startX, startY, endX, endY, displace);
+            return {
+              segments: segments,
+              alpha: 1,
+              color: Math.random() > 0.35 ? '#38bdf8' : '#818cf8'
+            };
+          }
+
+          function spawnStrike() {
+            var cx = w * 0.5 + (Math.random() - 0.5) * Math.min(w * 0.55, 340);
+            var cy = h * 0.48 + (Math.random() - 0.5) * 140;
+            var startX = cx + (Math.random() - 0.5) * 260;
+            bolts.push(createBolt(startX, 0, cx, cy, 130));
+            flashAlpha = 0.14;
+          }
+
+          // Sambaran awal langsung muncul saat halaman dibuka
+          spawnStrike();
+
+          var lastStrike = performance.now();
+          function render(now) {
+            if (isStopped) return;
+            ctx.clearRect(0, 0, w, h);
+
+            // Kilatan cahaya latar halus
+            if (flashAlpha > 0.005) {
+              var grad = ctx.createRadialGradient(w / 2, h / 2, 10, w / 2, h / 2, Math.max(w, h) * 0.65);
+              grad.addColorStop(0, 'rgba(56, 189, 248, ' + flashAlpha + ')');
+              grad.addColorStop(1, 'rgba(5, 5, 16, 0)');
+              ctx.fillStyle = grad;
+              ctx.fillRect(0, 0, w, h);
+              flashAlpha *= 0.86;
+            }
+
+            // Picu petir baru setiap ~320-650ms
+            if (now - lastStrike > 320 + Math.random() * 330) {
+              spawnStrike();
+              lastStrike = now;
+            }
+
+            // Gambar setiap sambaran petir dengan efek glow neon
+            for (var i = bolts.length - 1; i >= 0; i--) {
+              var b = bolts[i];
+              ctx.save();
+              ctx.globalAlpha = b.alpha;
+              ctx.shadowBlur = 18;
+              ctx.shadowColor = b.color;
+              ctx.strokeStyle = b.color;
+              ctx.lineWidth = 2.4;
+              ctx.beginPath();
+              for (var j = 0; j < b.segments.length; j++) {
+                var s = b.segments[j];
+                ctx.moveTo(s.x1, s.y1);
+                ctx.lineTo(s.x2, s.y2);
+              }
+              ctx.stroke();
+
+              // Inti putih terang di tengah petir
+              ctx.strokeStyle = '#ffffff';
+              ctx.lineWidth = 0.9;
+              ctx.stroke();
+              ctx.restore();
+
+              b.alpha -= 0.065;
+              if (b.alpha <= 0) bolts.splice(i, 1);
+            }
+
+            animId = requestAnimationFrame(render);
+          }
+          animId = requestAnimationFrame(render);
+
+          // Pantau: begitu loading selesai & beranda muncul, pudarkan petir lalu hapus canvas
+          var checkLoaded = setInterval(function () {
+            var bodyText = document.body.innerText || '';
+            var stillLoading = bodyText.indexOf('Memuat assets') !== -1;
+            var hasHero = document.querySelector('nav, .navbar-container, .portfolioroot-section');
+
+            if (!stillLoading && hasHero) {
+              clearInterval(checkLoaded);
+              canvas.style.opacity = '0';
+              setTimeout(function () {
+                isStopped = true;
+                cancelAnimationFrame(animId);
+                window.removeEventListener('resize', resize);
+                canvas.remove();
+              }, 600);
+            }
+          }, 200);
+        })();
       })();
+
     </script>
   </body>
 </html>
