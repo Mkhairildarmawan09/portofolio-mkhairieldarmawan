@@ -712,9 +712,10 @@
             }
           }, 200);
           // 7. PASTIKAN SEMUA PESAN FORM & KONTAK MASUK 100% KE AKUN KAMU (PUTUS DARI TEMPLATE LAMA)
+        // 7. PASTIKAN SEMUA PESAN FORM & KONTAK MASUK 100% KE AKUN KAMU (PUTUS DARI TEMPLATE LAMA)
         (function redirectContactToOwner() {
-          var EMAIL_TUJUAN = 'khairildermawan05@gmail.com'; // <-- GANTI DENGAN GMAIL KAMU
-          var NO_WA_TUJUAN = '6281263855800';        // <-- GANTI DENGAN NO WA KAMU (awalan 62)
+          var EMAIL_TUJUAN = 'EMAIL_KAMU@gmail.com'; // <-- GANTI DENGAN GMAIL KAMU
+          var NO_WA_TUJUAN = '6281234567890';        // <-- GANTI DENGAN NO WA KAMU (awalan 62)
 
           // A. Alihkan semua link mailto: dan wa.me milik template lama ke kontak kamu
           function patchContactLinks() {
@@ -761,7 +762,16 @@
             var idx = 1;
             form.querySelectorAll('input, textarea, select').forEach(function (field) {
               if (field.type === 'submit' || field.type === 'button' || !field.value.trim()) return;
+              var rawName = (field.name || field.placeholder || '').toLowerCase();
               var key = field.name || field.placeholder || ('Field_' + idx++);
+
+              // Pastikan kolom email dikenali FormSubmit sebagai "email" agar bisa langsung di-Reply
+              if (field.type === 'email' || rawName.indexOf('email') !== -1) {
+                key = 'email';
+              } else if (rawName.indexOf('nama') !== -1 || rawName.indexOf('name') !== -1) {
+                key = 'name';
+              }
+
               payload[key] = field.value.trim();
             });
 
@@ -794,7 +804,7 @@
           }, true);
         })();
         })();
-      })();
+        })();
 
     </script>
   </body>
