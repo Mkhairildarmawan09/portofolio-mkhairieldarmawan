@@ -6,7 +6,15 @@
     <meta property="og:image" content="./faviconari.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#050510" />
-    <style>html,body,#root{background-color:#050510;min-height:100%;margin:0;color:#f8fafc;font-family:'Inter',sans-serif}</style>
+    <style>
+      html, body, #root {
+        background-color: #050510;
+        min-height: 100%;
+        margin: 0;
+        color: #f8fafc;
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -22,7 +30,27 @@
     <link rel="stylesheet" crossorigin href="./assets/index-BAu5BQY0.css">
 
     <style id="fix-portofolio-exact">
-      /* Section & Container */
+      /* 1. OPTIMASI PERFORMA */
+      .liquid-metal-border,
+      [data-paper-shader] {
+        pointer-events: none !important;
+        opacity: 0.25;
+      }
+
+      .portfolioproject-card,
+      .portfoliocert-card,
+      .portfolioachievement-card,
+      .portfolioskill-card,
+      .portfoliotech-card {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+
+      .meteor:nth-child(n+7) {
+        display: none !important;
+      }
+
+      /* 2. SECTION & TAB NAVIGASI */
       .portfolioroot-section {
         position: relative;
         max-width: 1200px;
@@ -35,7 +63,6 @@
         width: 100%;
       }
 
-      /* Tab Navigasi (Projects, Certificates, Achievements, Tech Stack) */
       .portfoliotab-bar {
         display: flex;
         flex-wrap: wrap;
@@ -45,11 +72,9 @@
         padding: 0.5rem;
         width: fit-content;
         max-width: 100%;
-        background: rgba(13, 18, 36, 0.78);
+        background: rgba(13, 18, 36, 0.92);
         border: 1px solid rgba(139, 92, 246, 0.28);
         border-radius: 16px;
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
       }
 
@@ -66,7 +91,7 @@
         font-size: 0.95rem;
         font-weight: 600;
         cursor: pointer;
-        transition: all 0.25s ease;
+        transition: all 0.2s ease;
       }
 
       .portfoliotab-btn svg {
@@ -86,7 +111,7 @@
         box-shadow: 0 4px 20px rgba(99, 102, 241, 0.32);
       }
 
-      /* Grid Kartu Proyek */
+      /* 3. GRID & KARTU PROJECTS */
       .portfoliocards-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
@@ -94,49 +119,31 @@
         align-items: stretch;
       }
 
-      /* Kartu Proyek */
       .portfolioproject-card {
         position: relative;
         display: flex;
         flex-direction: column;
-        background: linear-gradient(180deg, rgba(17, 24, 48, 0.88) 0%, rgba(10, 14, 28, 0.95) 100%);
+        background: linear-gradient(180deg, #111830 0%, #0a0e1c 100%);
         border: 1px solid rgba(148, 163, 184, 0.18);
         border-radius: 20px;
         overflow: hidden;
-        backdrop-filter: blur(12px);
-        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
       }
 
       .portfolioproject-card:hover {
-        transform: translateY(-7px);
+        transform: translateY(-6px);
         border-color: rgba(96, 165, 250, 0.55);
-        box-shadow: 0 18px 40px -12px rgba(59, 130, 246, 0.3);
-      }
-
-      .portfolioproject-metal-border {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        border-radius: 20px;
-        overflow: hidden;
-        opacity: 0.45;
-      }
-
-      .portfolioproject-metal-border canvas {
-        width: 100% !important;
-        height: 100% !important;
-        display: block;
+        box-shadow: 0 16px 36px -12px rgba(59, 130, 246, 0.28);
       }
 
       .portfolioproject-card-content {
         position: relative;
-        z-index: 1;
+        z-index: 2;
         display: flex;
         flex-direction: column;
         flex: 1;
       }
 
-      /* Thumbnail Gambar Proyek (Mengunci ukuran agar tidak meluber) */
       .portfoliocard-thumbnail {
         position: relative;
         width: 100%;
@@ -153,14 +160,8 @@
         object-fit: cover;
         object-position: top center;
         display: block;
-        transition: transform 0.45s ease;
       }
 
-      .portfolioproject-card:hover .portfoliocard-thumbnail-image {
-        transform: scale(1.05);
-      }
-
-      /* Konten Teks Kartu */
       .portfoliocard-body {
         display: flex;
         flex-direction: column;
@@ -188,7 +189,6 @@
         overflow: hidden;
       }
 
-      /* Tombol & Link Footer Kartu */
       .portfoliocard-footer,
       .portfoliocard-actions {
         display: flex;
@@ -200,6 +200,8 @@
 
       .portfoliodetails-btn,
       .portfoliocard-body button {
+        position: relative;
+        z-index: 3;
         display: inline-flex;
         align-items: center;
         gap: 0.45rem;
@@ -211,7 +213,7 @@
         font-size: 0.88rem;
         font-weight: 600;
         cursor: pointer;
-        transition: all 0.22s ease;
+        transition: all 0.2s ease;
       }
 
       .portfoliodetails-btn:hover,
@@ -222,6 +224,8 @@
       }
 
       .portfoliocard-body a {
+        position: relative;
+        z-index: 3;
         display: inline-flex;
         align-items: center;
         gap: 0.4rem;
@@ -236,39 +240,109 @@
         text-decoration: underline;
       }
 
-      /* Tab Certificates, Achievements & Tech Stack */
+      /* 4. CERTIFICATES & ACHIEVEMENTS (PAKSA SUSUNAN ATAS-BAWAH) */
       .portfoliocertificates-grid,
       .portfolioachievements-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+        gap: 1.75rem;
       }
 
       .portfoliocert-card,
       .portfolioachievement-card {
-        background: rgba(15, 23, 42, 0.82);
-        border: 1px solid rgba(148, 163, 184, 0.18);
-        border-radius: 16px;
-        overflow: hidden;
-        transition: transform 0.25s ease, border-color 0.25s ease;
+        position: relative;
+        display: flex !important;
+        flex-direction: column !important;
+        background: linear-gradient(180deg, #111830 0%, #0a0e1c 100%) !important;
+        border: 1px solid rgba(148, 163, 184, 0.2) !important;
+        border-radius: 18px !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         cursor: pointer;
+      }
+
+      /* Paksa semua div pembungkus di dalam kartu sertifikat tersusun vertikal (bukan ke samping) */
+      .portfoliocert-card > div:not(.liquid-metal-border),
+      .portfolioachievement-card > div:not(.liquid-metal-border) {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        height: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        gap: 0 !important;
       }
 
       .portfoliocert-card:hover,
       .portfolioachievement-card:hover {
         transform: translateY(-5px);
-        border-color: rgba(139, 92, 246, 0.5);
+        border-color: rgba(139, 92, 246, 0.55) !important;
+        box-shadow: 0 14px 30px -10px rgba(99, 102, 241, 0.3);
       }
 
       .portfoliocert-preview-image,
       .portfoliocert-card img,
       .portfolioachievement-card img {
-        width: 100%;
-        height: 195px;
-        object-fit: cover;
-        display: block;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 210px !important;
+        object-fit: cover !important;
+        object-position: top center !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        display: block !important;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.14);
       }
 
+      /* Tombol "Lihat sertifikat" di bagian bawah kartu */
+      .portfoliocert-card button,
+      .portfoliocert-card a,
+      .portfoliocert-card span,
+      .portfolioachievement-card button,
+      .portfolioachievement-card a,
+      .portfolioachievement-card span {
+        position: relative;
+        z-index: 5 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0.5rem !important;
+        width: calc(100% - 2rem) !important;
+        margin: 0.9rem 1rem !important;
+        padding: 0.65rem 1rem !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(96, 165, 250, 0.35) !important;
+        background: rgba(59, 130, 246, 0.14) !important;
+        color: #93c5fd !important;
+        font-family: 'Space Grotesk', 'Inter', sans-serif !important;
+        font-size: 0.9rem !important;
+        font-weight: 600 !important;
+        white-space: nowrap !important;
+        text-decoration: none !important;
+        box-sizing: border-box !important;
+        transition: all 0.2s ease;
+      }
+
+      .portfoliocert-card:hover button,
+      .portfoliocert-card:hover a,
+      .portfoliocert-card:hover span,
+      .portfolioachievement-card:hover button,
+      .portfolioachievement-card:hover a,
+      .portfolioachievement-card:hover span {
+        background: linear-gradient(135deg, #3b82f6, #6366f1) !important;
+        border-color: transparent !important;
+        color: #ffffff !important;
+      }
+
+      .portfoliocert-card svg,
+      .portfolioachievement-card svg {
+        width: 16px !important;
+        height: 16px !important;
+        flex-shrink: 0 !important;
+      }
+
+      /* 5. TECH STACK */
       .portfolioskills-grid,
       .portfoliotech-grid {
         display: grid;
@@ -284,18 +358,18 @@
         justify-content: center;
         gap: 0.75rem;
         padding: 1.5rem 1rem;
-        background: rgba(15, 23, 42, 0.78);
+        background: #0f172a;
         border: 1px solid rgba(148, 163, 184, 0.16);
         border-radius: 16px;
         text-align: center;
-        transition: all 0.25s ease;
+        transition: transform 0.2s ease, border-color 0.2s ease;
       }
 
       .portfolioskill-card:hover,
       .portfoliotech-card:hover {
         transform: translateY(-4px);
         border-color: rgba(96, 165, 250, 0.5);
-        background: rgba(30, 41, 59, 0.88);
+        background: #1e293b;
       }
 
       .portfolioskill-card img,
@@ -305,45 +379,71 @@
         object-fit: contain;
       }
 
-      /* Popup Modal Detail Project */
-      .portfoliomodal-backdrop {
-        position: fixed;
-        inset: 0;
-        background: rgba(3, 7, 18, 0.82);
-        backdrop-filter: blur(10px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1.25rem;
-        z-index: 9999;
+      /* 6. MODAL SERTIFIKAT & PROJECT (MENANGANI NAMA CLASS TANPA TANDA HUBUNG) */
+      .portfoliomodal-backdrop,
+      .portfoliocert-modal-backdrop,
+      .portfolioproject-modal-backdrop,
+      [class*="portfoliomodal"] {
+        position: fixed !important;
+        inset: 0 !important;
+        background: rgba(3, 7, 18, 0.88) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 1.25rem !important;
+        z-index: 99999 !important;
       }
 
-      .portfoliomodal-dialog {
-        width: 100%;
-        max-width: 820px;
-        max-height: 90vh;
-        overflow-y: auto;
-        background: linear-gradient(180deg, #0f172a 0%, #090d1a 100%);
-        border: 1px solid rgba(99, 102, 241, 0.35);
-        border-radius: 24px;
-        padding: 2rem;
-        color: #f8fafc;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75);
-        position: relative;
+      .portfoliomodal-dialog,
+      .portfoliocert-modal-dialog,
+      .portfolioproject-modal-dialog {
+        position: relative !important;
+        width: 100% !important;
+        max-width: 860px !important;
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+        background: linear-gradient(180deg, #0f172a 0%, #090d1a 100%) !important;
+        border: 1px solid rgba(99, 102, 241, 0.45) !important;
+        border-radius: 22px !important;
+        padding: 1.75rem !important;
+        color: #f8fafc !important;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85) !important;
       }
 
-      .portfoliomodal-dialog img {
-        width: 100%;
-        max-height: 360px;
-        object-fit: cover;
-        object-position: top center;
-        border-radius: 14px;
-        margin-bottom: 1.5rem;
-        border: 1px solid rgba(148, 163, 184, 0.2);
+      .portfoliomodal-dialog img,
+      .portfoliocert-modal-dialog img,
+      .portfolioproject-modal-dialog img {
+        width: 100% !important;
+        max-height: 70vh !important;
+        object-fit: contain !important;
+        background: #050814 !important;
+        border-radius: 14px !important;
+        margin-bottom: 1.25rem !important;
+        border: 1px solid rgba(148, 163, 184, 0.2) !important;
       }
     </style>
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- JAGA AGAR SCROLL TIDAK TERKUNCI & MODAL SERTIFIKAT BISA DITUTUP -->
+    <script>
+      (function () {
+        function syncModalAndScroll() {
+          var hasVisibleModal = false;
+          document.querySelectorAll('[class*="modal"]').forEach(function (el) {
+            if (el.offsetParent !== null || getComputedStyle(el).position === 'fixed') {
+              hasVisibleModal = true;
+            }
+          });
+          // Jika tidak ada modal yang tampil di layar, pastikan body selalu bisa di-scroll
+          if (!hasVisibleModal && document.body.style.overflow === 'hidden') {
+            document.body.style.overflow = '';
+          }
+        }
+
+        setInterval(syncModalAndScroll, 300);
+      })();
+    </script>
   </body>
 </html>
