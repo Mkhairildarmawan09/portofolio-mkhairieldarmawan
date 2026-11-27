@@ -444,10 +444,7 @@
         .spotify-embed {
           height: 352px !important;
         }
-      }
-      /* Sembunyikan tulisan AlfariDev. di navbar HP & ratakan ikon ke kanan */
-      .navbar-mobile-brand {
-        display: none !important;
+      
       }
 
       @media (max-width: 768px) {
@@ -655,6 +652,26 @@
       })();
 
       
+    </script>
+    <!-- GANTI BRAND NAVBAR MOBILE MENJADI AriiDev. -->
+    <script>
+      (function () {
+        function setAriiDevBrand() {
+          document.querySelectorAll('.navbar-mobile-brand').forEach(function (el) {
+            if (el.textContent.trim() !== 'AriiDev.') {
+              el.textContent = 'AriiDev.';
+              el.setAttribute('aria-label', 'AriiDev.');
+            }
+          });
+        }
+
+        setAriiDevBrand();
+        var brandObserver = new MutationObserver(setAriiDevBrand);
+        brandObserver.observe(document.documentElement, {
+          childList: true,
+          subtree: true
+        });
+      })();
     </script>
   </body>
 </html>
