@@ -711,6 +711,88 @@
               }, 600);
             }
           }, 200);
+          // 7. PASTIKAN SEMUA PESAN FORM & KONTAK MASUK 100% KE AKUN KAMU (PUTUS DARI TEMPLATE LAMA)
+        (function redirectContactToOwner() {
+          var EMAIL_TUJUAN = 'khairildermawan05@gmail.com'; // <-- GANTI DENGAN GMAIL KAMU
+          var NO_WA_TUJUAN = '6281263855800';        // <-- GANTI DENGAN NO WA KAMU (awalan 62)
+
+          // A. Alihkan semua link mailto: dan wa.me milik template lama ke kontak kamu
+          function patchContactLinks() {
+            document.querySelectorAll('a[href^="mailto:"]').forEach(function (a) {
+              if (a.href.indexOf(EMAIL_TUJUAN) === -1) {
+                a.href = 'mailto:' + EMAIL_TUJUAN;
+                if (a.textContent.indexOf('@') !== -1) a.textContent = EMAIL_TUJUAN;
+              }
+            });
+
+            document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp.com"]').forEach(function (a) {
+              if (NO_WA_TUJUAN && a.href.indexOf(NO_WA_TUJUAN) === -1) {
+                a.href = 'https://wa.me/' + NO_WA_TUJUAN;
+              }
+            });
+          }
+          patchContactLinks();
+          new MutationObserver(patchContactLinks).observe(document.documentElement, {
+            childList: true,
+            subtree: true
+          });
+
+          // B. Cegat submit form "Hubungi Saya" & kirim langsung ke Gmail kamu via FormSubmit
+          document.addEventListener('submit', function (e) {
+            var form = e.target;
+            if (!form || form.tagName !== 'FORM') return;
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            var submitBtn = form.querySelector('button[type="submit"], button');
+            var originalBtnText = submitBtn ? submitBtn.textContent : 'Kirim';
+            if (submitBtn) {
+              submitBtn.disabled = true;
+              submitBtn.textContent = 'Mengirim pesan...';
+            }
+
+            var payload = {
+              _subject: 'Pesan Baru dari Portofolio AriiDev.',
+              _captcha: 'false',
+              _template: 'table'
+            };
+
+            var idx = 1;
+            form.querySelectorAll('input, textarea, select').forEach(function (field) {
+              if (field.type === 'submit' || field.type === 'button' || !field.value.trim()) return;
+              var key = field.name || field.placeholder || ('Field_' + idx++);
+              payload[key] = field.value.trim();
+            });
+
+            fetch('https://formsubmit.co/ajax/' + encodeURIComponent(EMAIL_TUJUAN), {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify(payload)
+            })
+              .then(function (res) {
+                if (!res.ok) throw new Error('Gagal mengirim');
+                return res.json();
+              })
+              .then(function () {
+                form.reset();
+                alert('Pesan berhasil terkirim langsung ke email M. Khairiel Darmawan!');
+              })
+              .catch(function () {
+                alert('Gagal mengirim via server, mengalihkan ke aplikasi email...');
+                window.location.href = 'mailto:' + EMAIL_TUJUAN + '?subject=' + encodeURIComponent('Pesan Portofolio');
+              })
+              .finally(function () {
+                if (submitBtn) {
+                  submitBtn.disabled = false;
+                  submitBtn.textContent = originalBtnText;
+                }
+              });
+          }, true);
+        })();
         })();
       })();
 
