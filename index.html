@@ -713,93 +713,61 @@
           }, 200);
           // 7. PASTIKAN SEMUA PESAN FORM & KONTAK MASUK 100% KE AKUN KAMU (PUTUS DARI TEMPLATE LAMA)
         // 7. PASTIKAN SEMUA PESAN FORM & KONTAK MASUK 100% KE AKUN KAMU (PUTUS DARI TEMPLATE LAMA)
-        (function redirectContactToOwner() {
-          var EMAIL_TUJUAN = 'EMAIL_KAMU@gmail.com'; // <-- GANTI DENGAN GMAIL KAMU
-          var NO_WA_TUJUAN = '6281234567890';        // <-- GANTI DENGAN NO WA KAMU (awalan 62)
+        // 7. KIRIM PESAN LANGSUNG KE GMAIL VIA WEB3FORMS
+        (function redirectContactToWeb3Forms() {
+          var ACCESS_KEY = 'e7dbad6c-706d-4102-8e9f-4e769f21b186';
 
-          // A. Alihkan semua link mailto: dan wa.me milik template lama ke kontak kamu
-          function patchContactLinks() {
-            document.querySelectorAll('a[href^="mailto:"]').forEach(function (a) {
-              if (a.href.indexOf(EMAIL_TUJUAN) === -1) {
-                a.href = 'mailto:' + EMAIL_TUJUAN;
-                if (a.textContent.indexOf('@') !== -1) a.textContent = EMAIL_TUJUAN;
-              }
-            });
+          document.addEventListener('click', function (e) {
+            var btn = e.target.closest('button');
+            if (!btn) return;
 
-            document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp.com"]').forEach(function (a) {
-              if (NO_WA_TUJUAN && a.href.indexOf(NO_WA_TUJUAN) === -1) {
-                a.href = 'https://wa.me/' + NO_WA_TUJUAN;
-              }
-            });
-          }
-          patchContactLinks();
-          new MutationObserver(patchContactLinks).observe(document.documentElement, {
-            childList: true,
-            subtree: true
-          });
+            var btnText = (btn.textContent || '').toLowerCase();
+            if (btnText.indexOf('kirim') === -1 && btnText.indexOf('send') === -1) return;
 
-          // B. Cegat submit form "Hubungi Saya" & kirim langsung ke Gmail kamu via FormSubmit
-          document.addEventListener('submit', function (e) {
-            var form = e.target;
-            if (!form || form.tagName !== 'FORM') return;
+            var container = btn.closest('form') || btn.closest('section') || btn.parentElement;
+            while (container && !container.querySelector('textarea') && container !== document.body) {
+              container = container.parentElement;
+            }
+            if (!container || !container.querySelector('textarea')) return;
 
             e.preventDefault();
             e.stopImmediatePropagation();
 
-            var submitBtn = form.querySelector('button[type="submit"], button');
-            var originalBtnText = submitBtn ? submitBtn.textContent : 'Kirim';
-            if (submitBtn) {
-              submitBtn.disabled = true;
-              submitBtn.textContent = 'Mengirim pesan...';
-            }
+            var originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Mengirim...';
 
-            var payload = {
-              _subject: 'Pesan Baru dari Portofolio AriiDev.',
-              _captcha: 'false',
-              _template: 'table'
+            var data = {
+              access_key: ACCESS_KEY,
+              subject: 'Pesan Baru dari Portofolio AriiDev.'
             };
 
-            var idx = 1;
-            form.querySelectorAll('input, textarea, select').forEach(function (field) {
-              if (field.type === 'submit' || field.type === 'button' || !field.value.trim()) return;
-              var rawName = (field.name || field.placeholder || '').toLowerCase();
-              var key = field.name || field.placeholder || ('Field_' + idx++);
-
-              // Pastikan kolom email dikenali FormSubmit sebagai "email" agar bisa langsung di-Reply
-              if (field.type === 'email' || rawName.indexOf('email') !== -1) {
-                key = 'email';
-              } else if (rawName.indexOf('nama') !== -1 || rawName.indexOf('name') !== -1) {
-                key = 'name';
-              }
-
-              payload[key] = field.value.trim();
+            container.querySelectorAll('input, textarea').forEach(function (el, i) {
+              if (el.type === 'submit' || el.type === 'button' || !el.value.trim()) return;
+              var key = el.name || el.placeholder || ('Field_' + (i + 1));
+              data[key] = el.value.trim();
             });
 
-            fetch('https://formsubmit.co/ajax/' + encodeURIComponent(EMAIL_TUJUAN), {
+            fetch('https://api.web3forms.com/submit', {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-              },
-              body: JSON.stringify(payload)
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify(data)
             })
+              .then(function (r) { return r.json(); })
               .then(function (res) {
-                if (!res.ok) throw new Error('Gagal mengirim');
-                return res.json();
-              })
-              .then(function () {
-                form.reset();
-                alert('Pesan berhasil terkirim langsung ke email M. Khairiel Darmawan!');
+                if (res.success) {
+                  container.querySelectorAll('input, textarea').forEach(function (el) { el.value = ''; });
+                  alert('Pesan berhasil terkirim ke email M. Khairiel Darmawan!');
+                } else {
+                  alert('Gagal mengirim: ' + (res.message || 'Periksa Access Key'));
+                }
               })
               .catch(function () {
-                alert('Gagal mengirim via server, mengalihkan ke aplikasi email...');
-                window.location.href = 'mailto:' + EMAIL_TUJUAN + '?subject=' + encodeURIComponent('Pesan Portofolio');
+                alert('Terjadi kesalahan jaringan saat mengirim pesan.');
               })
               .finally(function () {
-                if (submitBtn) {
-                  submitBtn.disabled = false;
-                  submitBtn.textContent = originalBtnText;
-                }
+                btn.disabled = false;
+                btn.textContent = originalText;
               });
           }, true);
         })();
