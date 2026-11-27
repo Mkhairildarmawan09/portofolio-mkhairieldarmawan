@@ -51,12 +51,16 @@
       }
 
       /* 2. PERBAIKAN SPOTIFY EMBED (HILANGKAN KOTAK PUTIH BAWAH) */
-      .spotify-card {
+      /* 2. PERBAIKAN SPOTIFY EMBED (TARGETKAN CLASS DENGAN & TANPA TANDA HUBUNG) */
+      .spotify-card,
+      .spotifycard {
         height: auto !important;
         min-height: 0 !important;
       }
 
-      .spotify-player-frame {
+      .spotify-player-frame,
+      .spotifyplayer-frame,
+      [class*="spotify"][class*="frame"] {
         height: 352px !important;
         min-height: 352px !important;
         max-height: 352px !important;
@@ -67,7 +71,8 @@
       }
 
       .spotify-embed,
-      .spotify-player-frame iframe {
+      .spotifyembed,
+      [class*="spotify"] iframe {
         width: 100% !important;
         height: 352px !important;
         min-height: 352px !important;
@@ -414,8 +419,8 @@
         // UBAH JUDUL PIAGAM DI SINI SESUAI NAMA PENCAPAIAN ASLI KAMU
         // ============================================================
         var JUDUL_PIAGAM = [
-          'Finalis 20 Besar Women & Youth Innovation Competition Sumut 2025',
-          'Piagam Pencapaian Kedua Kamu'
+          'Preview Piagam 1',
+          'Preview Piagam 2',
         ];
 
         // 1. GANTI NAMA BRAND NAVBAR MOBILE MENJADI AriiDev.
@@ -548,8 +553,8 @@
           document.body.appendChild(overlay);
         }
 
-        document.addEventListener('click', function (e) {
-          var card = e.target.closest('.portfoliocert-card, .portfolioachievement-card');
+       document.addEventListener('click', function (e) {
+          var card = e.target.closest('.portfoliocert-card, .portfolioachievement-card, .portfolioachievements-card, [class*="cert-card"], [class*="achievement"]');
           if (!card) return;
 
           var img = card.querySelector('img');
@@ -561,8 +566,14 @@
           var titleEl = card.querySelector('h3, h4, p');
           var title = titleEl ? titleEl.textContent.trim() : (img.alt || 'Detail Sertifikat');
 
-          if (card.classList.contains('portfolioachievement-card')) {
-            var allAchievements = Array.from(document.querySelectorAll('.portfolioachievement-card'));
+          // Ganti otomatis jika terdeteksi judul piagam bawaan template
+          var lowerTitle = title.toLowerCase();
+          if (lowerTitle.indexOf('ips terpadu') !== -1 || lowerTitle.indexOf('juara iii') !== -1) {
+            title = JUDUL_PIAGAM[0];
+          } else if (lowerTitle.indexOf('pencapaian kedua') !== -1) {
+            title = JUDUL_PIAGAM[1];
+          } else if (card.closest('[class*="achievement"]')) {
+            var allAchievements = Array.from(document.querySelectorAll('.portfolioachievement-card, .portfolioachievements-card, [class*="achievement-card"]'));
             var idx = allAchievements.indexOf(card);
             if (JUDUL_PIAGAM[idx]) {
               title = JUDUL_PIAGAM[idx];
