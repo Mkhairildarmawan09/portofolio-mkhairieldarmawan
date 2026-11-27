@@ -421,6 +421,30 @@
         margin-bottom: 1.25rem !important;
         border: 1px solid rgba(148, 163, 184, 0.2) !important;
       }
+      /* 7. PERBAIKAN NAVBAR MOBILE & SPOTIFY EMBED DI HP */
+      .spotify-player-frame {
+        height: auto !important;
+        min-height: 0 !important;
+        background: transparent !important;
+        overflow: hidden !important;
+        border-radius: 16px !important;
+      }
+
+      .spotify-embed {
+        width: 100% !important;
+        height: 352px !important;
+        min-height: 352px !important;
+        max-height: 352px !important;
+        display: block !important;
+        border: 0 !important;
+        border-radius: 16px !important;
+      }
+
+      @media (max-width: 768px) {
+        .spotify-embed {
+          height: 352px !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -599,6 +623,11 @@
         });
         window.addEventListener('DOMContentLoaded', injectDesignTools);
       })();
+      document.querySelectorAll('.navbar-mobile-brand').forEach(function (el) {
+  el.textContent = 'Khairiel.';
+  el.setAttribute('aria-label', 'Khairiel.');
+});
+      
     </script>
   </body>
 </html>
