@@ -445,6 +445,36 @@
           height: 352px !important;
         }
       }
+      /* Sembunyikan tulisan AlfariDev. di navbar HP & ratakan ikon ke kanan */
+      .navbar-mobile-brand {
+        display: none !important;
+      }
+
+      @media (max-width: 768px) {
+        .navbar-container .glass-surface__content {
+          justify-content: flex-end !important;
+        }
+      }
+
+      /* Pastikan kotak Spotify pas tanpa ruang putih berlebih */
+      .spotify-player-frame {
+        height: auto !important;
+        min-height: 0 !important;
+        background: transparent !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        border-radius: 16px !important;
+      }
+
+      .spotify-embed {
+        width: 100% !important;
+        height: 352px !important;
+        min-height: 352px !important;
+        max-height: 352px !important;
+        display: block !important;
+        border: 0 !important;
+        border-radius: 16px !important;
+      }
     </style>
   </head>
   <body>
@@ -623,10 +653,7 @@
         });
         window.addEventListener('DOMContentLoaded', injectDesignTools);
       })();
-      document.querySelectorAll('.navbar-mobile-brand').forEach(function (el) {
-  el.textContent = 'Khairiel.';
-  el.setAttribute('aria-label', 'Khairiel.');
-});
+
       
     </script>
   </body>
